@@ -1,0 +1,16 @@
+{
+	"type": "postgres",
+	"host": "localhost",
+	"port": 5432,
+	"username": "sarori",
+	"password": "sarori",
+	"database": "instaclonets",
+	"synchronize": true,
+	"logging": false,
+	"entities": ["entities/**/*.*"],
+	"migrations": ["migration/**/*.*"],
+	"cli": {
+		"entitiesDir": "entities",
+		"migrationsDir": "migration"
+	}
+}

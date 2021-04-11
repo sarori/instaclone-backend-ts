@@ -1,0 +1,36 @@
+type createAccountResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
+}
+
+type meResponse {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+type Query {
+  me: meResponse!
+  seeUser(id: Int!): seeUserReponse!
+}
+
+type seeUserReponse {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  username: String!
+  password: String!
+  email: String!
+  createdAt: String!
+  updatedAt: String!
+}
