@@ -5,6 +5,22 @@ type createAccountResponse {
 
 type Mutation {
   createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
+  login(username: String!, password: String!): LoginResponse!
+}
+
+type editProfileResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Muation {
+  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!
+}
+
+type LoginResponse {
+  ok: Boolean!
+  token: String
+  error: String
 }
 
 type meResponse {

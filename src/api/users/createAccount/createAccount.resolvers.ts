@@ -8,7 +8,16 @@ const resolver: Resolvers = {
 			_,
 			args: CreateAccountMutationArgs
 		): Promise<createAccountResponse> => {
+			const { username } = args
 			try {
+				const exist = await User.findOne({ username })
+				if (exist) {
+					return {
+						ok: false,
+						error: "this username is already taken",
+					}
+				}
+				//password
 				const user = await User.create({ ...args })
 				if (!user) {
 					return {

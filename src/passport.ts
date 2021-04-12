@@ -1,22 +1,32 @@
+import passport from "passport"
+import { Strategy, ExtractJwt } from "passport-jwt"
 import User from "./entities/User"
-import * as jwt from "jsonwebtoken"
 
-export const verifyJWT = async (token: string): Promise<User | undefined> => {
+const jwtOptions = {
+	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+	secretOrKey: "m5rI3DOEVX80ckuhNDffyhMNstmbdSiK",
+}
+
+const verifyUser = async (payload, done) => {
 	try {
-		const verifyResult: any = jwt.verify(token, process.env.JWT_TOKEN || "")
-		if (verifyResult && verifyResult.id) {
-			const { id } = verifyResult
-			const user = await User.findOne({
-				id,
-			})
-			return user
+		const user = await User.findOne({ id: payload.id })
+		if (user !== null) {
+			return done(null, user)
+		} else {
+			return done(null, false)
 		}
-		return undefined
-	} catch (error) {
-		return undefined
+	} catch (err) {
+		return done(err, false)
 	}
 }
 
-export const createJWT = (id: string): string => {
-	return jwt.sign({ id }, process.env.JWT_TOKEN || "")
-}
+export const authenticateJwt = (req, res, next) =>
+	passport.authenticate("jwt", { session: false }, (error, user) => {
+		if (user) {
+			req.user = user
+		}
+		next()
+	})(req, res, next)
+
+passport.use(new Strategy(jwtOptions, verifyUser))
+passport.initialize()

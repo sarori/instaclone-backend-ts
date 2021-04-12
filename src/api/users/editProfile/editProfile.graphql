@@ -1,0 +1,15 @@
+type editProfileResponse {
+	ok: Boolean!
+	error: String
+}
+
+type Muation {
+	editProfile(
+		id: Int!
+		firstName: String
+		lastName: String
+		username: String
+		email: String
+		password: String
+	): editProfileResponse!
+}
