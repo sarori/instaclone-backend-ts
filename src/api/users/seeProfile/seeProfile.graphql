@@ -1,0 +1,9 @@
+type seeProfileResponse {
+	ok: Boolean!
+	error: String
+	user: User
+}
+
+type Query {
+	seeProfile(username: String!): seeProfileResponse!
+}

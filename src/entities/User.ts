@@ -3,10 +3,12 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm"
 import { IsEmail } from "class-validator"
+import Photo from "./Photo"
 
 @Entity()
 class User extends BaseEntity {
@@ -27,6 +29,9 @@ class User extends BaseEntity {
 	@Column({ type: "text" })
 	@IsEmail()
 	email: string
+
+	@OneToMany(() => Photo, (photo) => photo.user, { nullable: true })
+	photos: Photo[] | null
 
 	@CreateDateColumn()
 	createdAt: string

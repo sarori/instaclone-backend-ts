@@ -1,4 +1,4 @@
-import User from "src/entities/User"
+import User from "../../../entities/User"
 import jwt from "jsonwebtoken"
 import { Resolvers } from "src/types/resolvers"
 import { LoginMutationArgs, LoginResponse } from "../../../types/graph"

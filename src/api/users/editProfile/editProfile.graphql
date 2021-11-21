@@ -3,7 +3,7 @@ type editProfileResponse {
 	error: String
 }
 
-type Muation {
+type Mutation {
 	editProfile(
 		id: Int!
 		firstName: String

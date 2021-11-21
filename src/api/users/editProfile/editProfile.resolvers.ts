@@ -1,11 +1,12 @@
-import User from "src/entities/User"
+import User from "../../../entities/User"
 import { Resolvers } from "src/types/resolvers"
-import { EditProfileMuationArgs, editProfileResponse } from "../../../types/graph"
+import { EditProfileMutationArgs, editProfileResponse } from "../../../types/graph"
+
 const resolver: Resolvers = {
 	Mutation: {
 		editProfile: async (
 			_,
-			args: EditProfileMuationArgs,
+			args: EditProfileMutationArgs,
 			{ request, isAuthenticated }
 		): Promise<editProfileResponse> => {
 			isAuthenticated(request)
