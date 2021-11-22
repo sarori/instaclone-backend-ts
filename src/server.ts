@@ -2,7 +2,6 @@ import { Options } from "graphql-yoga"
 import { createConnection } from "typeorm"
 import app from "./app"
 import decodeJWT from "./decodeJWT"
-
 const PLAYGROUND_ENDPOINT: string = "/playground"
 const GRAPHQL_ENDPOINT: string = "/graphql"
 const SUBSCRIPTION_ENDPOINT: string = "/subscription"

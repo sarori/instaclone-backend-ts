@@ -1,12 +1,60 @@
-type createAccountResponse {
-  ok: Boolean!
-  error: String
+type Comment {
+  int: Int!
+  payload: String!
+  photoId: Int!
+  user: User!
+  photo: Photo!
+  createdAt: String!
+  updatedAt: String!
 }
 
+type Hashtag {
+  id: Int!
+  hashtag: String!
+  totalPhotos: Int!
+  createdAt: String!
+  updatedAt: String!
+  photos: [Photo]
+}
+
+type Like {
+  id: Int!
+  photoId: Int!
+  photo: Photo!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Photo {
+  id: Int!
+  user: User!
+  file: String!
+  caption: String
+  hashtag: Hashtag
+  createdAt: String!
+  updatedAt: String!
+  userId: Int!
+  hashtagId: Int
+  likesNumber: Int!
+  likes: [Like]
+  comments: [Comment]
+  commentNumber: Int!
+  isMine: Boolean!
+  isLiked: Boolean!
+}
+
+scalar Upload
+
 type Mutation {
+  uploadPhoto(file: Upload!, caption: String): Photo
   createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
   editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!
   login(username: String!, password: String!): LoginResponse!
+}
+
+type createAccountResponse {
+  ok: Boolean!
+  error: String
 }
 
 type editProfileResponse {
@@ -53,4 +101,6 @@ type User {
   email: String!
   createdAt: String!
   updatedAt: String!
+  bio: String
+  avatar: String
 }

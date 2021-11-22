@@ -16,7 +16,7 @@ class Hashtag extends BaseEntity {
 	@Column({ type: "text" })
 	hashtag: string
 
-	@Column({ type: "numeric" })
+	@Column({ type: "numeric", default: 0 })
 	totalPhotos: number
 
 	@CreateDateColumn()

@@ -37,7 +37,7 @@ class Photo extends BaseEntity {
 	@UpdateDateColumn()
 	updatedAt: string
 
-	@Column({ type: "numeric" })
+	@Column({ type: "numeric", default: 0 })
 	likesNumber: number
 
 	@OneToMany(() => Like, (like) => like.photo, { nullable: true })
@@ -46,21 +46,21 @@ class Photo extends BaseEntity {
 	@OneToMany(() => Comment, (comment) => comment.photo, { nullable: true })
 	comments: Comment[] | null
 
-	@Column({ type: "numeric" })
+	@Column({ type: "numeric", default: 0 })
 	commentNumber: number
 
-	@Column({ type: "boolean" })
+	@Column({ type: "boolean", default: false })
 	isMine: boolean
 
-	@Column({ type: "boolean" })
+	@Column({ type: "boolean", default: false })
 	isLiked: boolean
 
-	@Column({ type: "numeric" })
-	hashtagId: number
+	@Column({ type: "numeric", nullable: true })
+	hashtagId: number | null
 
 	@ManyToOne(() => Hashtag, (hashtag) => hashtag.photos, { nullable: true })
 	@JoinColumn({ name: "hashtagId", referencedColumnName: "id" })
-	hashtag: Hashtag
+	hashtag: Hashtag | null
 }
 export default Photo
 

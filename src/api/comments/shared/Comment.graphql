@@ -1,0 +1,9 @@
+type Comment {
+	int: Int!
+	payload: String!
+	photoId: Int!
+	user: User!
+	photo: Photo!
+	createdAt: String!
+	updatedAt: String!
+}

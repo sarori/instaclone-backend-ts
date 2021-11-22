@@ -9,6 +9,4 @@ type User {
 	updatedAt: String!
 	bio: String
 	avatar: String
-	isMe: Boolean!
-	isFollowing: Boolean!
 }

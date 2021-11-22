@@ -1,0 +1,8 @@
+type Hashtag {
+	id: Int!
+	hashtag: String!
+	totalPhotos: Int!
+	createdAt: String!
+	updatedAt: String!
+	photos: [Photo]
+}

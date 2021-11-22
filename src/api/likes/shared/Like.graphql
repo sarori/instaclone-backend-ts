@@ -1,0 +1,7 @@
+type Like {
+	id: Int!
+	photoId: Int!
+	photo: Photo!
+	createdAt: String!
+	updatedAt: String!
+}

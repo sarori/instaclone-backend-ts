@@ -1,4 +1,4 @@
-export const typeDefs = ["type createAccountResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!\n  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!\n  login(username: String!, password: String!): LoginResponse!\n}\n\ntype editProfileResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype LoginResponse {\n  ok: Boolean!\n  token: String\n  error: String\n}\n\ntype meResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype Query {\n  me: meResponse!\n  seeProfile(username: String!): seeProfileResponse!\n  seeUser(id: Int!): seeUserReponse!\n}\n\ntype seeProfileResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype seeUserReponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype User {\n  id: Int!\n  firstName: String!\n  lastName: String!\n  username: String!\n  password: String!\n  email: String!\n  createdAt: String!\n  updatedAt: String!\n}\n"];
+export const typeDefs = ["type Comment {\n  int: Int!\n  payload: String!\n  photoId: Int!\n  user: User!\n  photo: Photo!\n  createdAt: String!\n  updatedAt: String!\n}\n\ntype Hashtag {\n  id: Int!\n  hashtag: String!\n  totalPhotos: Int!\n  createdAt: String!\n  updatedAt: String!\n  photos: [Photo]\n}\n\ntype Like {\n  id: Int!\n  photoId: Int!\n  photo: Photo!\n  createdAt: String!\n  updatedAt: String!\n}\n\ntype Photo {\n  id: Int!\n  user: User!\n  file: String!\n  caption: String\n  hashtag: Hashtag\n  createdAt: String!\n  updatedAt: String!\n  userId: Int!\n  hashtagId: Int\n  likesNumber: Int!\n  likes: [Like]\n  comments: [Comment]\n  commentNumber: Int!\n  isMine: Boolean!\n  isLiked: Boolean!\n}\n\nscalar Upload\n\ntype Mutation {\n  uploadPhoto(file: Upload!, caption: String): Photo\n  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!\n  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!\n  login(username: String!, password: String!): LoginResponse!\n}\n\ntype createAccountResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype editProfileResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype LoginResponse {\n  ok: Boolean!\n  token: String\n  error: String\n}\n\ntype meResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype Query {\n  me: meResponse!\n  seeProfile(username: String!): seeProfileResponse!\n  seeUser(id: Int!): seeUserReponse!\n}\n\ntype seeProfileResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype seeUserReponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype User {\n  id: Int!\n  firstName: String!\n  lastName: String!\n  username: String!\n  password: String!\n  email: String!\n  createdAt: String!\n  updatedAt: String!\n  bio: String\n  avatar: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
@@ -30,6 +30,8 @@ export interface User {
   email: string;
   createdAt: string;
   updatedAt: string;
+  bio: string | null;
+  avatar: string | null;
 }
 
 export interface seeProfileResponse {
@@ -45,9 +47,15 @@ export interface seeUserReponse {
 }
 
 export interface Mutation {
+  uploadPhoto: Photo | null;
   createAccount: createAccountResponse;
   editProfile: editProfileResponse;
   login: LoginResponse;
+}
+
+export interface UploadPhotoMutationArgs {
+  file: Upload;
+  caption: string | null;
 }
 
 export interface CreateAccountMutationArgs {
@@ -70,6 +78,53 @@ export interface EditProfileMutationArgs {
 export interface LoginMutationArgs {
   username: string;
   password: string;
+}
+
+export type Upload = any;
+
+export interface Photo {
+  id: number;
+  user: User;
+  file: string;
+  caption: string | null;
+  hashtag: Hashtag | null;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+  hashtagId: number | null;
+  likesNumber: number;
+  likes: Array<Like> | null;
+  comments: Array<Comment> | null;
+  commentNumber: number;
+  isMine: boolean;
+  isLiked: boolean;
+}
+
+export interface Hashtag {
+  id: number;
+  hashtag: string;
+  totalPhotos: number;
+  createdAt: string;
+  updatedAt: string;
+  photos: Array<Photo> | null;
+}
+
+export interface Like {
+  id: number;
+  photoId: number;
+  photo: Photo;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Comment {
+  int: number;
+  payload: string;
+  photoId: number;
+  user: User;
+  photo: Photo;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface createAccountResponse {

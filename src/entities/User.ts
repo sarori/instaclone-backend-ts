@@ -38,6 +38,12 @@ class User extends BaseEntity {
 
 	@UpdateDateColumn()
 	updatedAt: string
+
+	@Column({ type: "text", nullable: true })
+	bio: string
+
+	@Column({ type: "text", nullable: true })
+	avatar: string
 }
 
 export default User

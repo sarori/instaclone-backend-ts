@@ -18,9 +18,6 @@ class Comment extends BaseEntity {
 	@Column({ type: "text" })
 	payload: string
 
-	@Column({ type: "boolean" })
-	isMine: boolean
-
 	@Column({ type: "numeric" })
 	photoId: number
 
