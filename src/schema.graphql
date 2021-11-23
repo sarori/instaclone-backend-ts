@@ -25,6 +25,35 @@ type Like {
   updatedAt: String!
 }
 
+type MutationResponse {
+  ok: Boolean!
+  id: Int
+  error: String
+  ok: Boolean!
+  id: Int
+  error: String
+}
+
+type Mutation {
+  deletePhoto(id: Int!): MutationResponse!
+  editPhoto(id: Int!, caption: String): MutationResponse!
+  uploadPhoto(file: Upload!, caption: String): Photo
+  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
+  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!
+  login(username: String!, password: String!): LoginResponse!
+}
+
+type Query {
+  searchPhotos(keyword: String!): [Photo]
+  seeFeed: [Photo]
+  seeHashtag(hashtag: String!): Hashtag
+  seePhotoComments(id: Int!, page: Int!): [Comment]
+  seePhotoLikes(id: Int!): [User]
+  me: meResponse!
+  seeProfile(username: String!): seeProfileResponse!
+  seeUser(id: Int!): seeUserReponse!
+}
+
 type Photo {
   id: Int!
   user: User!
@@ -44,13 +73,6 @@ type Photo {
 }
 
 scalar Upload
-
-type Mutation {
-  uploadPhoto(file: Upload!, caption: String): Photo
-  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
-  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!
-  login(username: String!, password: String!): LoginResponse!
-}
 
 type createAccountResponse {
   ok: Boolean!
@@ -72,12 +94,6 @@ type meResponse {
   ok: Boolean!
   error: String
   user: User
-}
-
-type Query {
-  me: meResponse!
-  seeProfile(username: String!): seeProfileResponse!
-  seeUser(id: Int!): seeUserReponse!
 }
 
 type seeProfileResponse {

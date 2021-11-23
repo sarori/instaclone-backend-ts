@@ -1,0 +1,9 @@
+type MutationResponse {
+	ok: Boolean!
+	id: Int
+	error: String
+}
+
+type Mutation {
+	deletePhoto(id: Int!): MutationResponse!
+}

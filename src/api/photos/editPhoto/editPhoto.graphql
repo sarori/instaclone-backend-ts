@@ -1,0 +1,9 @@
+type MutationResponse {
+	ok: Boolean!
+	id: Int
+	error: String
+}
+
+type Mutation {
+	editPhoto(id: Int!, caption: String): MutationResponse!
+}
