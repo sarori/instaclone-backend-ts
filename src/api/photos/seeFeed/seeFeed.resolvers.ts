@@ -5,12 +5,13 @@ import { getRepository } from "typeorm"
 const resolver: Resolvers = {
 	Query: {
 		seeFeed: async (_, __, { loggedInUser, protectedResolver }) => {
-			protectedResolver(loggedInUser)
+			// protectedResolver(loggedInUser)
 			const photoRepo = getRepository(Photo)
 			const feeds = await photoRepo.find({
 				order: {
 					createdAt: "DESC",
 				},
+				relations: ["user"],
 			})
 			return feeds
 		},

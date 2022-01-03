@@ -1,0 +1,9 @@
+type MutationResponse {
+	ok: Boolean!
+	id: Int
+	error: String
+}
+
+type Mutation {
+	deleteComment(id: Int!): MutationResponse
+}

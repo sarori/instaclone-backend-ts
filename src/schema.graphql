@@ -1,3 +1,37 @@
+type MutationResponse {
+  ok: Boolean!
+  id: Int
+  error: String
+  ok: Boolean!
+  id: Int
+  error: String
+  ok: Boolean!
+  id: Int
+  error: String
+  ok: Boolean!
+  id: Int
+  error: String
+  ok: Boolean!
+  id: Int
+  error: String
+  ok: Boolean!
+  id: Int
+  error: String
+}
+
+type Mutation {
+  createComment(id: Int!, payload: String!): MutationResponse!
+  deleteComment(id: Int!): MutationResponse
+  editComment(id: Int!, payload: String!): MutationResponse!
+  toggleLike(id: Int!): MutationResponse!
+  deletePhoto(id: Int!): MutationResponse!
+  editPhoto(id: Int!, caption: String): MutationResponse!
+  uploadPhoto(file: Upload!, caption: String): Photo
+  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
+  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!
+  login(username: String!, password: String!): LoginResponse!
+}
+
 type Comment {
   int: Int!
   payload: String!
@@ -25,31 +59,13 @@ type Like {
   updatedAt: String!
 }
 
-type MutationResponse {
-  ok: Boolean!
-  id: Int
-  error: String
-  ok: Boolean!
-  id: Int
-  error: String
-}
-
-type Mutation {
-  deletePhoto(id: Int!): MutationResponse!
-  editPhoto(id: Int!, caption: String): MutationResponse!
-  uploadPhoto(file: Upload!, caption: String): Photo
-  createAccount(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): createAccountResponse!
-  editProfile(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResponse!
-  login(username: String!, password: String!): LoginResponse!
-}
-
 type Query {
   searchPhotos(keyword: String!): [Photo]
   seeFeed: [Photo]
   seeHashtag(hashtag: String!): Hashtag
   seePhotoComments(id: Int!, page: Int!): [Comment]
   seePhotoLikes(id: Int!): [User]
-  me: meResponse!
+  me(token: String!): meResponse!
   seeProfile(username: String!): seeProfileResponse!
   seeUser(id: Int!): seeUserReponse!
 }

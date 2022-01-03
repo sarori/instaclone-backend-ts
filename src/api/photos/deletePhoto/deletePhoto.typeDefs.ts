@@ -11,7 +11,7 @@ const resolver: Resolvers = {
 			{ protectedResolver, loggedInUser }
 		): Promise<MutationResponse> => {
 			const { id } = args
-			protectedResolver(loggedInUser)
+			// protectedResolver(loggedInUser)
 			const photoRepo = getRepository(Photo)
 			const selectedPhoto = await photoRepo.findOne({ where: { id } })
 			if (selectedPhoto && selectedPhoto?.userId === loggedInUser.id) {

@@ -15,6 +15,7 @@ const appOption: Options = {
 		path: SUBSCRIPTION_ENDPOINT,
 		onConnect: async (connectionParams) => {
 			const token = connectionParams["Bearer"]
+			console.log(token)
 			if (token) {
 				const user = await decodeJWT(
 					(token as string).includes(" ") ? token.split(" ")[1] : token

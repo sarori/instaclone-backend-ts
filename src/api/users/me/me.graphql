@@ -5,5 +5,5 @@ type meResponse {
 }
 
 type Query {
-	me: meResponse!
+	me(token: String!): meResponse!
 }

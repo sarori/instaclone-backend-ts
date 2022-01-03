@@ -17,6 +17,7 @@ class App {
 			schema,
 			context: (req) => {
 				const { connection: { context = null } = {} } = req
+				console.log(context)
 				return {
 					request: req.request,
 					pubsub: this.pubSub,

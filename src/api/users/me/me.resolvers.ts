@@ -1,13 +1,22 @@
-import { meResponse } from "src/types/graph"
+import decodeJWT from "../../../decodeJWT"
+import { meResponse, MeQueryArgs } from "src/types/graph"
 import { Resolvers } from "src/types/resolvers"
 
 const resolver: Resolvers = {
 	Query: {
-		me: async (_, __, context): Promise<meResponse> => {
-			console.log(context)
+		me: async (_, args: MeQueryArgs, { loggedInUser }): Promise<meResponse> => {
 			try {
+				const { token } = args
+				const user = await decodeJWT(token)
+				if (user) {
+					return {
+						ok: true,
+						error: null,
+						user,
+					}
+				}
 				return {
-					ok: true,
+					ok: false,
 					error: null,
 					user: null,
 				}

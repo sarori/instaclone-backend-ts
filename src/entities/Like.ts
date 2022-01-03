@@ -26,6 +26,9 @@ class Like extends BaseEntity {
 
 	@UpdateDateColumn()
 	updatedAt: string
+
+	@Column({ type: "numeric" })
+	userId: number
 }
 
 export default Like

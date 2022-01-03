@@ -1,13 +1,21 @@
 import User from "../../../entities/User"
-import { Resolvers } from "src/types/resolvers"
-import { SeeProfileQueryArgs, seeProfileResponse } from "src/types/graph"
+import { Resolvers } from "../../../types/resolvers"
+import { SeeProfileQueryArgs, seeProfileResponse } from "../../../types/graph"
+import { getRepository } from "typeorm"
 
 const resolver: Resolvers = {
 	Query: {
 		seeProfile: async (_, args: SeeProfileQueryArgs): Promise<seeProfileResponse> => {
 			try {
 				const { username } = args
-				const user = await User.findOne({ username })
+				const userRepo = getRepository(User)
+				const user = await userRepo.findOne({
+					where: {
+						username,
+					},
+					// relations: ["photos"],
+				})
+				console.log(user, username)
 				if (!user) {
 					return {
 						ok: false,

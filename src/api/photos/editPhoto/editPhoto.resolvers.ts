@@ -3,7 +3,7 @@ import { EditPhotoMutationArgs, MutationResponse } from "src/types/graph"
 import { Resolvers } from "src/types/resolvers"
 import { getRepository } from "typeorm"
 import Hashtag from "../../../entities/Hashtag"
-import { processHashtags } from "../uploadPhoto/photos.utils"
+import { processHashtags } from "../shared/photos.utils"
 
 const resolver: Resolvers = {
 	Mutation: {
@@ -14,6 +14,7 @@ const resolver: Resolvers = {
 		): Promise<MutationResponse> => {
 			const { id, caption } = args
 			const photoRepo = getRepository(Photo)
+			const hashtagRepo = getRepository(Hashtag)
 			const oldPhoto = await photoRepo.findOne({
 				where: {
 					id,
@@ -36,13 +37,24 @@ const resolver: Resolvers = {
 					hashtag: oldPhoto.hashtag,
 				}
 				oldPhoto.caption = caption || prevValue.caption
-				// if (caption && caption !== oldPhoto.caption) {
-				// 	let hashtagObj = processHashtags(caption)
-				// 	const newHashtag = new Hashtag()
-				// 	newHashtag.hashtag = hashtagObj[i].where
-				// 	await hashtagRepo.save(newHashtag)
-				// }
+
+				if (caption) {
+					let proccessedHashtag = processHashtags(caption)[0].where.hashtag
+					if (oldPhoto.hashtag?.hashtag === proccessedHashtag) {
+						oldPhoto.hashtag = null
+					} else {
+						const newHashtag = new Hashtag()
+						newHashtag.hashtag = proccessedHashtag
+						const savedHashtag = await hashtagRepo.save(newHashtag)
+						oldPhoto.hashtag = savedHashtag
+					}
+				}
 				await photoRepo.save(oldPhoto)
+				return {
+					ok: true,
+					id,
+					error: null,
+				}
 			}
 		},
 	},

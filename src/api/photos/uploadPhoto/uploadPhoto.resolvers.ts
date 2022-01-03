@@ -1,7 +1,7 @@
 import { GraphQLUpload } from "graphql-upload"
 import Photo from "../../../entities/Photo"
 import { getRepository } from "typeorm"
-import { processHashtags } from "./photos.utils"
+import { processHashtags } from "../shared/photos.utils"
 import { uploadToS3 } from "../../users/shared/shared.utils"
 import Hashtag from "../../../entities/Hashtag"
 
@@ -12,7 +12,7 @@ const resolver = {
 			let hashtagObj
 			if (caption) {
 				hashtagObj = processHashtags(caption)
-				protectedResolver(loggedInUser)
+				// protectedResolver(loggedInUser)
 			}
 			const fileUrl = await uploadToS3(file, loggedInUser.id, "uploads")
 			const photoRepo = getRepository(Photo)
@@ -25,10 +25,12 @@ const resolver = {
 				})
 				if (founded) {
 					photo.hashtag = founded
+					break
 				} else {
 					const newHashtag = new Hashtag()
 					newHashtag.hashtag = hashtagObj[i].where
 					await hashtagRepo.save(newHashtag)
+					break
 				}
 			}
 			photo.caption = caption
